@@ -21,15 +21,9 @@ log/
 # Flyway
 flyway-*
 
-# Thymeleaf
-target/
-
 # Spring Boot
 mvnw
 mvnw.cmd
-target/
-*.jar
-*.war
 !src/main/resources/application.properties
 
 # Node.js
