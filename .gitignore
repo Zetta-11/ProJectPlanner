@@ -1,6 +1,7 @@
 # Maven
 target/
 *.iml
+*.md
 
 # IntelliJ IDEA
 .idea/
