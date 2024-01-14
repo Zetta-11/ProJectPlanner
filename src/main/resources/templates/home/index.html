@@ -1,15 +1,42 @@
-<!-- src/main/resources/templates/home/index.html -->
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
+      lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/header.css">
     <title>ProJectPlanner - Home</title>
 </head>
+
 <body>
+<header>
+    <div class="header-left">
+        <img src="/images/mainLogo.png" alt="Logo">
+        <h1>ProJectPlanner</h1>
+    </div>
+    <nav>
+        <a href="/home">Home</a>
+        <a href="#">Projects</a>
+        <a href="#">My Account</a>
+        <a href="/about">About</a>
+    </nav>
+    <form class="header-right" sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
+        <button class="logout-button" type="submit">Logout</button>
+    </form>
+</header>
+
 <div id="root">
+    <!-- Змініть цей блок відповідно до вашого контенту -->
     <p>HELLO</p>
 </div>
 
+<footer>
+    <p>&copy; Klim Menkov 2024 ProJectPlanner. All rights reserved.</p>
+</footer>
 </body>
+
 </html>

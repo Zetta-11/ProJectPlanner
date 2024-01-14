@@ -1,0 +1,62 @@
+/* src/main/resources/static/css/header.css */
+header {
+    background-color: #007bff;
+    padding: 10px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.header-left img {
+    max-height: 50px;
+    margin-right: 20px;
+}
+
+nav {
+    font-size: 150%;
+    display: flex;
+    justify-content: center;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px;
+    margin: 0 10px;
+    transition: color 0.3s ease-in-out;
+}
+
+nav a:hover {
+    color: #ffcc00;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+.logout-button {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 180%;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.3s ease-in-out;
+}
+
+.logout-button:hover {
+    color: #ffcc00;
+}
+
+.logout-button.loggedIn {
+    text-decoration: none; /* Залишаємо підкреслення тут */
+    transition: text-decoration 0.3s ease-in-out;
+}
+

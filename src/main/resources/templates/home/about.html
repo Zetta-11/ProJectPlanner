@@ -1,0 +1,54 @@
+<!-- src/main/resources/templates/about/index.html -->
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/about.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <title>ProJectPlanner - About</title>
+</head>
+
+<body>
+<header>
+    <div class="header-left">
+        <img src="/images/mainLogo.png" alt="Logo">
+        <h1>ProJectPlanner</h1>
+    </div>
+    <nav>
+        <a href="/home">Home</a>
+        <a href="/projects">Projects</a>
+        <a href="/account">My Account</a>
+        <a href="/about">About</a>
+    </nav>
+    <form class="header-right" sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
+        <button class="logout-button" type="submit">Logout</button>
+    </form>
+</header>
+
+<div id="root">
+    <div class="about-container">
+        <div class="about-text">
+            <p>
+                Today's work environment is full of challenges and opportunities that demand from teams and individual
+                users not only high productivity but also effective tools for managing tasks and projects. The rhythm of
+                modern business activity leaves little room for error and requires an immediate response to changes. The
+                lack of convenient tools can become an obstacle on the way to achieving the set goals, causing a loss of
+                time, ineffective planning, and unsuccessful control over processes. In this context, there is an urgent
+                need to create an integrated task management system that not only meets the requirements of the time but
+                also becomes an integral part of the successful functioning of business structures.
+            </p>
+        </div>
+        <div class="about-image">
+            <img src="/images/about-image.jpg" alt="About Image">
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; Klim Menkov 2024 ProJectPlanner. All rights reserved.</p>
+</footer>
+</body>
+</html>
