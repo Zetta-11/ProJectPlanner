@@ -3,26 +3,28 @@ package com.dnu.klimmenkov.projectplanner.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.time.LocalDateTime;
-
 @Entity
 @Table(name = "users")
 @Data
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id")
+    private int id;
 
-    @Column(unique = true, name = "username")
+    @Column(name = "login", length = 50, unique = true, nullable = false)
     private String login;
 
-    @Column(name = "password")
+    @Column(name = "password", length = 255, nullable = false)
     private String password;
 
-    @Column(name = "created_at")
-    private LocalDateTime creationDate;
+    @Column(name = "created_at", updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private java.sql.Timestamp createdAt;
 
-    @Column(name = "roles")
+    @Column(name = "roles", length = 20, nullable = false)
     private String roles;
 
+    @ManyToOne
+    @JoinColumn(name = "project_id")
+    private Project project;
 }
