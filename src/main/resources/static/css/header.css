@@ -60,3 +60,14 @@ nav a:hover {
     transition: text-decoration 0.3s ease-in-out;
 }
 
+nav a.register-button {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px;
+    margin: 0 10px;
+    transition: color 0.3s ease-in-out;
+}
+
+nav a.register-button:hover {
+    color: #ffcc00;
+}
