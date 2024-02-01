@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.sql.Timestamp;
+
 @Controller
 public class HomeController {
 
@@ -30,6 +32,7 @@ public class HomeController {
     @PostMapping("/new-user")
     @ResponseBody
     public String createNewUser(@RequestBody User user) {
+        user.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         userService.saveUser(user);
         return "User is saved!";
     }

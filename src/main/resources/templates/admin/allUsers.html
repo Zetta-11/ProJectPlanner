@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>All Users</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/footer.css">
+</head>
+
+<body>
+<header>
+    <div class="header-left">
+        <img src="/images/mainLogo.png" alt="Logo">
+        <h1>ProJectPlanner</h1>
+    </div>
+    <form class="header-right" sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
+        <button class="logout-button" type="submit">Logout</button>
+    </form>
+</header>
+
+<div class="container mt-5">
+    <h2>All Users</h2>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Password</th>
+            <th>Created at</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Loop through users and populate table rows -->
+        <tr th:each="user : ${users}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.login}"></td>
+            <td th:text="${user.password}"></td>
+            <td th:text="${user.createdAt}"></td>
+            <td>
+                <a th:href="@{'/admin/users/update/' + ${user.id}}" class="btn btn-primary btn-sm">Update</a>
+                <a th:href="@{'/admin/users/delete/' + ${user.id}}" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<footer>
+    <p>&copy; Klim Menkov 2024 ProJectPlanner. All rights reserved.</p>
+</footer>
+</body>
+</html>
