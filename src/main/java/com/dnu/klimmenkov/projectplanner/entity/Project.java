@@ -2,11 +2,13 @@ package com.dnu.klimmenkov.projectplanner.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 import java.util.List;
 
 @Entity
 @Data
+@ToString
 @Table(name = "projects")
 public class Project {
     @Id
