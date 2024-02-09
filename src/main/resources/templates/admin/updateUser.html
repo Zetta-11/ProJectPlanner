@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Update User</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/admin/update-user.css">
+</head>
+<body>
+<header>
+    <div class="header-left">
+        <img src="/images/mainLogo.png" alt="Logo">
+        <h1>ProJectPlanner</h1>
+    </div>
+    <nav>
+        <a href="/admin">Back To Admin Page</a>
+    </nav>
+    <form class="header-right" sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
+        <button class="logout-button" type="submit">Logout</button>
+    </form>
+</header>
+
+<div class="container">
+    <h2>Update User</h2>
+    <form action="#" th:action="@{'/admin/users/update/' + ${user.id}}" th:object="${user}" method="post">
+        <div class="form-group">
+            <input type="hidden" th:field="*{id}"/>
+            <input type="hidden" th:field="*{login}"/>
+            <input type="hidden" th:field="*{createdAt}"/>
+
+            <label for="password">Password:</label>
+            <input type="password" class="form-control" id="password" th:field="*{password}" required>
+            <span th:if="${#fields.hasErrors('password')}" class="error-message" style="color: red"
+                  th:errors="*{password}"></span>
+        </div>
+
+        <select class="form-control" name="project" required>
+            <option value="" disabled>Select Project</option>
+            <option th:each="project : ${projects}" th:value="${project.id}" th:text="${project.name}" th:selected="${project.id == user.project.id}"></option>
+        </select>
+        <br>
+        <div class="form-group">
+            <label for="role">Role:</label>
+            <select class="form-control" id="role" th:field="*{roles}" required>
+                <option value="ROLE_ADMIN" th:selected="${user.roles == 'ROLE_ADMIN'}">Admin</option>
+                <option value="ROLE_USER" th:selected="${user.roles == 'ROLE_USER'}">User</option>
+            </select>
+        </div>
+        <br><br>
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+
+</div>
+
+<footer>
+    <p>&copy; Klim Menkov 2024 ProJectPlanner. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

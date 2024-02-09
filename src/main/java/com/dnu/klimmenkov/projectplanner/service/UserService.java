@@ -8,7 +8,13 @@ public interface UserService {
 
     void saveUser(User user);
 
+    void updateUser(int id, User user);
+
     List<User> getAllUsers();
 
     User findByLogin(String login);
+
+    User getUserById(int id);
+
+    void deleteUser(int id);
 }

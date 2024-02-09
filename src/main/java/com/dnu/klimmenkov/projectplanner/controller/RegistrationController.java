@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class RegistrationController {
 
-    final ProjectService projectService;
-    final UserService userService;
+    private final ProjectService projectService;
+    private final UserService userService;
 
     public RegistrationController(ProjectService projectService, UserService userService) {
         this.projectService = projectService;

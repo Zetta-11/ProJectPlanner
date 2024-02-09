@@ -26,6 +26,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void updateUser(int id, User updatedUser) {
+        User existingUser = userRepository.findById((long) id).orElse(null);
+        if (existingUser != null) {
+            existingUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
+            existingUser.setProject(updatedUser.getProject());
+            existingUser.setRoles(updatedUser.getRoles());
+
+            userRepository.save(existingUser);
+        }
+    }
+
+    @Override
     public List<User> getAllUsers() {
         List<User> allUsers = userRepository.findAll();
         return allUsers;
@@ -34,5 +46,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByLogin(String login) {
         return userRepository.findByLogin(login).orElse(null);
+    }
+
+    @Override
+    public User getUserById(int id) {
+        return userRepository.findById((long) id).orElse(null);
+    }
+
+    @Override
+    public void deleteUser(int id) {
+        userRepository.deleteById((long) id);
     }
 }
