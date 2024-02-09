@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
-      lang="en">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -25,13 +23,12 @@
         <a href="/about">About</a>
         <a href="/registration" class="register-button">Register</a>
     </nav>
-    <form class="header-right" sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
-        <button class="logout-button" type="submit">Logout</button>
+    <form class="header-right" th:action="@{/logout}" method="post">
+        <button sec:authorize="isAuthenticated()" class="logout-button" type="submit">Logout</button>
     </form>
 </header>
 
 <div id="root">
-    <!-- Змініть цей блок відповідно до вашого контенту -->
     <p>HELLO</p>
 </div>
 

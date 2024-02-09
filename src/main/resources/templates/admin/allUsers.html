@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>All Users</title>
@@ -14,8 +14,8 @@
         <img src="/images/mainLogo.png" alt="Logo">
         <h1>ProJectPlanner</h1>
     </div>
-    <form class="header-right" sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
-        <button class="logout-button" type="submit">Logout</button>
+    <form class="header-right" th:action="@{/logout}" method="post">
+        <button sec:authorize="isAuthenticated()" class="logout-button" type="submit">Logout</button>
     </form>
 </header>
 
@@ -40,7 +40,7 @@
             <td th:text="${user.login}"></td>
             <td th:text="${user.password}"></td>
             <td th:text="${user.createdAt}"></td>
-            <td th:text="${user.project}"></td>
+            <td th:text="${user.project != null} ? ${user.project.name} : 'NULL'"></td>
             <td th:text="${user.roles}"></td>
             <td>
                 <a th:href="@{'/admin/users/update/' + ${user.id}}" class="btn btn-primary btn-sm">Update</a>

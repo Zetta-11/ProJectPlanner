@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -23,8 +23,8 @@
         <a href="/account">My Account</a>
         <a href="/about">About</a>
     </nav>
-    <form class="header-right" sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
-        <button class="logout-button" type="submit">Logout</button>
+    <form class="header-right" th:action="@{/logout}" method="post">
+        <button sec:authorize="isAuthenticated()" class="logout-button" type="submit">Logout</button>
     </form>
 </header>
 
@@ -51,6 +51,10 @@
 
         <button type="submit" class="btn btn-primary">Register</button>
     </form>
+    <br>
+    <div>
+        <p>Already has an account? <a href="/login">Login here</a>.</p>
+    </div>
 </div>
 
 <footer>
