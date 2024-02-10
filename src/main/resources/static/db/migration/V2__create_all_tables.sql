@@ -21,7 +21,7 @@ CREATE TABLE attachments
     task_id    INT,
     file_name  VARCHAR(255) NOT NULL,
     file_type  VARCHAR(50)  NOT NULL,
-    file_data  LONGBLOB,
+    file_path  VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (task_id) REFERENCES tasks (id)
 );

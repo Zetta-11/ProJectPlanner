@@ -1,6 +1,7 @@
 package com.dnu.klimmenkov.projectplanner.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,6 +25,7 @@ public class History {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @NotBlank(message = "Action description cannot be blank!")
     @Column(name = "action_description", columnDefinition = "TEXT")
     private String actionDescription;
 

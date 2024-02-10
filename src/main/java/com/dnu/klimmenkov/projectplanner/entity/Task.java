@@ -1,7 +1,10 @@
 package com.dnu.klimmenkov.projectplanner.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,9 +24,11 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "task_name", length = 255, nullable = false)
+    @NotBlank(message = "Task name cannot be blank!")
+    @Column(name = "task_name", nullable = false)
     private String taskName;
 
+    @NotBlank(message = "Task description cannot be blank!")
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
@@ -39,11 +44,14 @@ public class Task {
     @JoinColumn(name = "assigned_to_user_id")
     private User assignedToUser;
 
-    @Size(min = 0, max = 10)
+    @NotNull(message = "Cannot be null!")
+    @Max(value = 10, message = "Should be from 0 to 10")
     private int priority;
 
+    @NotNull(message = "Deadline cannot be null!")
     private Timestamp deadline;
 
+    @Pattern(regexp = "^(Done|In Progress|Waiting)$", message = "Status should be: Done, In Progress or Waiting")
     private String status;
 
     @Column(name = "created_at", updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
