@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ProjectServiceImpl implements ProjectService {
 
-    private ProjectRepository projectRepository;
+    private final ProjectRepository projectRepository;
 
     @Override
     public void saveProject(Project project) {
@@ -25,5 +25,10 @@ public class ProjectServiceImpl implements ProjectService {
 
         return allProjects;
 
+    }
+
+    @Override
+    public void deleteProject(int id) {
+        projectRepository.deleteById((long) id);
     }
 }

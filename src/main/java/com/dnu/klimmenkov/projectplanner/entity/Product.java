@@ -1,6 +1,7 @@
 package com.dnu.klimmenkov.projectplanner.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.util.List;
@@ -14,9 +15,11 @@ public class Product {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "product_name", length = 100, nullable = false)
+    @NotBlank(message = "Name cannot be blank!")
+    @Column(name = "product_name", length = 100)
     private String name;
 
+    @NotBlank(message = "Description cannot be blank!")
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 

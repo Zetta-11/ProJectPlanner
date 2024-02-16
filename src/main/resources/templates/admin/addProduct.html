@@ -1,0 +1,50 @@
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Product</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/footer.css">
+</head>
+<body>
+<header>
+    <div class="header-left">
+        <img src="/images/mainLogo.png" alt="Logo">
+        <h1>ProJectPlanner</h1>
+    </div>
+    <nav>
+        <a href="/admin">Back To Admin Page</a>
+    </nav>
+    <form class="header-right" th:action="@{/logout}" method="post">
+        <button sec:authorize="isAuthenticated()" class="logout-button" type="submit">Logout</button>
+    </form>
+</header>
+
+<div class="container mt-5">
+    <h2>Add New Product</h2>
+    <form th:action="@{/admin/products}" method="post" th:object="${product}">
+        <input type="hidden" th:field="*{id}">
+        <div class="form-group">
+            <label for="productName">Product Name:</label>
+            <input type="text" class="form-control" id="productName" name="name" th:field="*{name}">
+            <small th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></small>
+        </div>
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea class="form-control" id="description" name="description" th:field="*{description}" rows="4"></textarea>
+            <small th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="text-danger"></small>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Product</button>
+    </form>
+</div>
+
+<footer>
+    <p>&copy; Klim Menkov 2024 ProJectPlanner. All rights reserved.</p>
+</footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-package com.dnu.klimmenkov.projectplanner.controller;
+package com.dnu.klimmenkov.projectplanner.controller.admin;
 
 import com.dnu.klimmenkov.projectplanner.entity.User;
 import com.dnu.klimmenkov.projectplanner.service.ProjectService;
@@ -10,36 +10,31 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/admin")
-public class AdminController {
+@RequestMapping("/admin/users")
+public class UsersController {
 
     private final UserService userService;
     private final ProjectService projectService;
 
-    public AdminController(UserService userService, ProjectService projectService) {
+    public UsersController(UserService userService, ProjectService projectService) {
         this.userService = userService;
         this.projectService = projectService;
     }
 
-    @GetMapping()
-    public String getMainAdminPage() {
-        return "admin/adminMainPage";
-    }
-
-    @GetMapping("/users")
+    @GetMapping
     public String getAllUsers(Model model) {
         model.addAttribute("users", userService.getAllUsers());
         return "admin/allUsers";
     }
 
-    @GetMapping("/users/update/{id}")
+    @GetMapping("/update/{id}")
     public String getUpdateUserForm(@PathVariable int id, Model model) {
         model.addAttribute("user", userService.getUserById(id));
         model.addAttribute("projects", projectService.getAllProjects());
         return "admin/updateUser";
     }
 
-    @PostMapping("/users/update/{id}")
+    @PostMapping("/update/{id}")
     public String updateUser(Model model, @PathVariable int id, @Valid @ModelAttribute("user") User updatedUser, BindingResult result) {
         if (result.hasErrors()) {
             model.addAttribute("user", updatedUser);
@@ -51,7 +46,7 @@ public class AdminController {
         return "redirect:/admin/users";
     }
 
-    @GetMapping("/users/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String deleteUser(@PathVariable int id) {
         userService.deleteUser(id);
         return "redirect:/admin/users";
