@@ -3,6 +3,7 @@ package com.dnu.klimmenkov.projectplanner.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class Product {
     @Column(name = "created_at", updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private java.sql.Timestamp createdAt;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Project> projects;
 }

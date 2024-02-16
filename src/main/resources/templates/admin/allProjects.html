@@ -15,7 +15,7 @@
     </div>
     <nav>
         <a href="/admin">Back To Admin Page</a>
-        <a href="/admin/products/new">Create new Project</a>
+        <a href="/admin/projects/new">Create new Project</a>
     </nav>
     <form class="header-right" th:action="@{/logout}" method="post">
         <button sec:authorize="isAuthenticated()" class="logout-button" type="submit">Logout</button>
@@ -29,8 +29,8 @@
         <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>Description</th>
             <th>Created at</th>
+            <th>Product</th>
         </tr>
         </thead>
         <tbody>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Project</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/footer.css">
+</head>
+<body>
+<header>
+    <div class="header-left">
+        <img src="/images/mainLogo.png" alt="Logo">
+        <h1>ProJectPlanner</h1>
+    </div>
+    <nav>
+        <a href="/admin">Back To Admin Page</a>
+    </nav>
+    <form class="header-right" th:action="@{/logout}" method="post">
+        <button sec:authorize="isAuthenticated()" class="logout-button" type="submit">Logout</button>
+    </form>
+</header>
+
+<div class="container mt-5">
+    <h2>Add New Project</h2>
+    <form th:action="@{/admin/projects}" method="post" th:object="${project}">
+        <input type="hidden" th:field="*{id}">
+        <div class="form-group">
+            <label for="projectName">Project Name:</label>
+            <input type="text" id="projectName" name="name" class="form-control" th:field="*{name}">
+            <small th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></small>
+        </div>
+        <div class="form-group">
+            <label for="product">Product:</label>
+            <select id="product" name="product" class="form-control" th:field="*{product}">
+                <option value="" disabled>Select Product</option>
+                <option th:each="product : ${allProducts}" th:value="${product.id}" th:text="${product.name}"></option>
+            </select>
+            <small th:if="${#fields.hasErrors('product')}" th:errors="*{product}" class="text-danger"></small>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Project</button>
+    </form>
+</div>
+<footer>
+    <p>&copy; Klim Menkov 2024 ProJectPlanner. All rights reserved.</p>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

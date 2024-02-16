@@ -9,5 +9,7 @@ public interface ProjectService {
 
     List<Project> getAllProjects();
 
+    Project getProjectById(int id);
+
     void deleteProject(int id);
 }

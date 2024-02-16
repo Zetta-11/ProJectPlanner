@@ -39,7 +39,7 @@
 
         <select class="form-control" name="project" required>
             <option value="" disabled>Select Project</option>
-            <option th:each="project : ${projects}" th:value="${project.id}" th:text="${project.name}" th:selected="${project.id == user.project.id}"></option>
+            <option th:each="project : ${projects}" th:value="${project.id}" th:text="${project.name}" th:selected="${user.project != null and project.id == user.project.id}"></option>
         </select>
         <br>
         <div class="form-group">

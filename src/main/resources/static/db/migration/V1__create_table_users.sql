@@ -23,13 +23,9 @@ CREATE TABLE users
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     roles      VARCHAR(20)        NOT NULL,
     project_id INT,
-    FOREIGN KEY (project_id) REFERENCES projects (id)
+    FOREIGN KEY (project_id) REFERENCES projects (id) ON DELETE SET NULL
 );
 
 INSERT INTO products (product_name, description) VALUES ('Product 1', 'Description for Product 1');
 
 INSERT INTO projects (project_name, product_id) VALUES ('Project 1', 1);
-
-INSERT INTO users (login, password, roles, project_id) VALUES ('klim', 'Asdfgh123!@', 'ROLE_ADMIN', 1);
-
-INSERT INTO users (login, password, roles, project_id) VALUES ('user', 'Asdfgh123!@', 'ROLE_USER', 1);

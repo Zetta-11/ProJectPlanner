@@ -2,7 +2,6 @@ package com.dnu.klimmenkov.projectplanner.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -39,7 +38,7 @@ public class User {
     @Column(name = "roles", length = 20, nullable = false)
     private String roles;
 
-    @NotNull(message = "You should select the project")
+    //@NotNull(message = "You should select the project")
     @ManyToOne
     @JoinColumn(name = "project_id")
     private Project project;

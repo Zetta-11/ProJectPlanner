@@ -6,6 +6,7 @@ import com.dnu.klimmenkov.projectplanner.service.ProjectService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Service
@@ -16,6 +17,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public void saveProject(Project project) {
+        project.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         projectRepository.save(project);
     }
 
@@ -25,6 +27,11 @@ public class ProjectServiceImpl implements ProjectService {
 
         return allProjects;
 
+    }
+
+    @Override
+    public Project getProjectById(int id) {
+        return projectRepository.getReferenceById((long) id);
     }
 
     @Override
