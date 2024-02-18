@@ -38,6 +38,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean checkPasswordIsValid(String password) {
+        String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
+        return password.matches(regex);
+    }
+
+    @Override
     public List<User> getAllUsers() {
         List<User> allUsers = userRepository.findAll();
         return allUsers;

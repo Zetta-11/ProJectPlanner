@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/myAccount.css">
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/header.css">
+</head>
+<body>
+<header>
+    <div class="header-left">
+        <img src="/images/mainLogo.png" alt="Logo">
+        <h1>ProJectPlanner</h1>
+    </div>
+    <nav>
+        <a href="/home">Home</a>
+        <a href="#">Projects</a>
+        <a href="/about">About</a>
+        <a sec:authorize="hasRole('ROLE_ADMIN')" href="/admin">Admin</a>
+    </nav>
+    <form class="header-right" th:action="@{/logout}" method="post">
+        <button sec:authorize="isAuthenticated()" class="logout-button" type="submit">Logout</button>
+    </form>
+</header>
+
+<div class="container mt-5">
+    <h2>User Profile</h2>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <img class="card-img-top user-avatar mx-auto mt-4" src="/images/user-286.png" alt="User Avatar">
+                <div class="card-body text-center">
+                    <h5 class="card-title" th:text="${user.login}"></h5>
+                    <p class="card-text" th:text="'User ID: ' + ${user.id}"></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Personal Information</h5>
+                    <div class="user-info">
+                        <p><strong>Email:</strong> <span th:text="${user.login}"></span></p>
+                        <p><strong>Joined:</strong> <span th:text="${user.createdAt}"></span></p>
+                        <p><strong>Roles:</strong> <span th:text="${user.roles}"></span></p>
+                        <p><strong>Project ID:</strong> <span th:text="${user.project.id}"></span></p>
+                        <p><strong>Product ID:</strong> <span th:text="${user.project.product.id}"></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Settings</h5>
+                    <p class="card-text">Additional for user</p>
+                    <a href="myAccount/changePassword" class="btn btn-primary">Change Password</a>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Project Information</h5>
+                    <p class="card-text" th:text="${'Project ID: ' + user.project.id}"></p>
+                    <p class="card-text" th:text="${'Project name: ' + user.project.name}"></p>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Project Information</h5>
+                    <p class="card-text" th:text="${'Product ID: ' + user.project.product.id}"></p>
+                    <p class="card-text" th:text="${'Product name: ' + user.project.product.name}"></p>
+                    <p class="card-text" th:text="${'Product description: ' + user.project.product.description}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="mt-5">
+    <div class="container">
+        <p>&copy; Klim Menkov 2024 ProJectPlanner. All rights reserved.</p>
+    </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -10,6 +10,8 @@ public interface UserService {
 
     void updateUser(int id, User user);
 
+    boolean checkPasswordIsValid(String password);
+
     List<User> getAllUsers();
 
     User findByLogin(String login);
