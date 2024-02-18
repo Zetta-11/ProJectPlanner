@@ -9,7 +9,6 @@ ProJectPlanner is a comprehensive project management system designed to streamli
 - **Task Management:** Create, assign, and track tasks effortlessly.
 - **User Authentication:** Securely manage access with user authentication.
 - **Spring Boot Backend:** Utilizes the power of Spring Boot for robust backend development.
-- **React Frontend:** A responsive and dynamic user interface built with React.
 - **MySQL Database:** Persistent data storage with MySQL.
 - **Thymeleaf Templates:** Seamless integration of dynamic content using Thymeleaf templates.
 - **Lombok:** Reduce boilerplate code with Lombok annotations.
