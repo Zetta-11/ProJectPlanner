@@ -38,4 +38,9 @@ public class ProjectServiceImpl implements ProjectService {
     public void deleteProject(int id) {
         projectRepository.deleteById((long) id);
     }
+
+    @Override
+    public int countUsersByProjectId(int projectId) {
+        return projectRepository.countUsersByProjectId(projectId);
+    }
 }

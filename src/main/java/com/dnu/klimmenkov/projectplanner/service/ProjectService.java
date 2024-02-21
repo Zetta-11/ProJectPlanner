@@ -12,4 +12,6 @@ public interface ProjectService {
     Project getProjectById(int id);
 
     void deleteProject(int id);
+
+    int countUsersByProjectId(int projectId);
 }

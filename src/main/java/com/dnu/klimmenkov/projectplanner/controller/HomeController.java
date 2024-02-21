@@ -41,7 +41,9 @@ public class HomeController {
         if (project == null) {
             return "home/allProjects";
         }
+        int userCount = projectService.countUsersByProjectId(projectId);
         model.addAttribute("project", project);
+        model.addAttribute("userCount", userCount);
         return "home/projectDetails";
     }
 
