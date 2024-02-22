@@ -35,6 +35,7 @@ public class HomeController {
         return "home/allProjects";
     }
 
+    //TODO add general tasks quantity, done tasks, undone tasks and tasks in progress to details
     @GetMapping("/projects/{projectId}")
     public String showProjectDetails(@PathVariable("projectId") int projectId, Model model) {
         Project project = projectService.getProjectById(projectId);

@@ -51,7 +51,7 @@ public class Task {
     @NotNull(message = "Deadline cannot be null!")
     private Timestamp deadline;
 
-    @Pattern(regexp = "^(Done|In Progress|Waiting)$", message = "Status should be: Done, In Progress or Waiting")
+    @Pattern(regexp = "^(Done|In Progress|To Do)$", message = "Status should be: Done, In Progress or To Do")
     private String status;
 
     @Column(name = "created_at", updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")

@@ -1,0 +1,16 @@
+.task-card {
+    margin-bottom: 20px;
+}
+
+.col-md-4 {
+    max-height: 70%;
+    margin-bottom: 5%;
+}
+
+.task-card-header {
+    background-color: #007bff;
+    color: #fff;
+}
+.task-card-footer {
+    background-color: #f8f9fa;
+}

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Board</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/tasks.css">
+</head>
+<body>
+<header>
+    <div class="header-left">
+        <img src="/images/mainLogo.png" alt="Logo">
+        <h1>ProJectPlanner</h1>
+    </div>
+    <nav>
+        <a href="/home">Home</a>
+        <a href="/myAccount">My account</a>
+        <a href="/about">About</a>
+        <a sec:authorize="hasRole('ROLE_ADMIN')" href="/admin">Admin</a>
+    </nav>
+    <form class="header-right" th:action="@{/logout}" method="post">
+        <button sec:authorize="isAuthenticated()" class="logout-button" type="submit">Logout</button>
+    </form>
+</header>
+
+<div class="container-fluid mt-5">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header task-card-header">
+                    <h5 class="mb-0">To Do</h5>
+                </div>
+                <div class="card-body">
+                    <div th:each="task : ${toDoTasks}" class="task-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6 class="card-title" th:text="${task.taskName}"></h6>
+                                <p class="card-text" th:text="${task.description}"></p>
+                                <a th:href="@{'/tasks/' + ${task.id}}" class="btn btn-sm btn-info">Details</a>
+                                <button class="btn btn-sm btn-danger">Delete</button>
+                            </div>
+                            <div class="card-footer text-muted task-card-footer">
+                                <span th:text="${'Assigned to:  ' + task.assignedToUser.login}"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header task-card-header">
+                    <h5 class="mb-0">In Progress</h5>
+                </div>
+                <div class="card-body">
+                    <div th:each="task : ${inProgressTasks}" class="task-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6 class="card-title" th:text="${task.taskName}"></h6>
+                                <p class="card-text" th:text="${task.description}"></p>
+                                <a th:href="@{'/tasks/' + ${task.id}}" class="btn btn-sm btn-info">Details</a>
+                                <button class="btn btn-sm btn-danger">Delete</button>
+                            </div>
+                            <div class="card-footer text-muted task-card-footer">
+                                <span th:text="${'Assigned to:  ' + task.assignedToUser.login}"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header task-card-header">
+                    <h5 class="mb-0">Done</h5>
+                </div>
+                <div class="card-body">
+                    <div th:each="task : ${doneTasks}" class="task-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6 class="card-title" th:text="${task.taskName}"></h6>
+                                <p class="card-text" th:text="${task.description}"></p>
+                                <a th:href="@{'/tasks/' + ${task.id}}" class="btn btn-sm btn-info">Details</a>
+                                <button class="btn btn-sm btn-danger">Delete</button>
+                            </div>
+                            <div class="card-footer text-muted task-card-footer">
+                                <span th:text="${'Assigned to:  ' + task.assignedToUser.login}"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<footer class="mt-5">
+    <div class="container">
+        <p>&copy; Klim Menkov 2024 ProJectPlanner. All rights reserved.</p>
+    </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
