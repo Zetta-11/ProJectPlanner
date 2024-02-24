@@ -1,0 +1,19 @@
+.container {
+    margin-top: 50px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.btn-primary {
+    width: 100%;
+}
+
+.task-container {
+    background-color: #f8f9fa; /* Цвет фона */
+    border: 2px solid #007bff; /* Цвет рамки и толщина */
+    border-radius: 10px; /* Закругление углов */
+    padding: 20px; /* Внутренний отступ */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Тень */
+}

@@ -75,3 +75,22 @@ nav a.register-button {
 nav a.register-button:hover {
     color: #ffcc00;
 }
+
+.create-task-button {
+    background-color: #ffcc00;
+    color: #007bff;
+    border: 2px solid #007bff;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 18px;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.create-task-button:hover {
+    background-color: #ffcc00;
+    color: #007bff;
+    border: 2px solid #007bff;
+    box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3);
+    transform: translateY(-3px);
+}
