@@ -24,6 +24,13 @@ public class MyAccountController {
     public String showMyAccount(@AuthenticationPrincipal UserDetails userDetails, Model model) {
         String login = userDetails.getUsername();
         User user = userService.findByLogin(login);
+        int tasksAssignedToUser = userService.countTasksAssignedToUser(login);
+        int tasksCreatedByUser = userService.countTasksCreatedByUser(login);
+        int tasksDoneByUser = userService.countTasksDoneByUser(login);
+
+        model.addAttribute("tasksAssignedToUser", tasksAssignedToUser);
+        model.addAttribute("tasksCreatedByUser", tasksCreatedByUser);
+        model.addAttribute("tasksDoneByUser", tasksDoneByUser);
         model.addAttribute("user", user);
 
         return "account/myAccount";

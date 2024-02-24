@@ -18,7 +18,8 @@
     </div>
     <nav>
         <a href="/home">Home</a>
-        <a href="#">Projects</a>
+        <a href="/tasks">Tasks board</a>
+        <a href="/projects">Projects</a>
         <a href="/about">About</a>
         <a sec:authorize="hasRole('ROLE_ADMIN')" href="/admin">Admin</a>
     </nav>
@@ -93,8 +94,9 @@
             <div class="card" style="margin-top: 2%">
                 <div class="card-body">
                     <h5 class="card-title">Tasks Information</h5>
-                    <p class="card-text" th:text="${'Tasks assigned to me: ' + 1}"></p>
-                    <p class="card-text" th:text="${'Created tasks: ' + 33}"></p>
+                    <p class="card-text">Tasks assigned to me now: <span th:text="${tasksAssignedToUser}"></span></p>
+                    <p class="card-text">Created tasks by all the time: <span th:text="${tasksCreatedByUser}"></span></p>
+                    <p class="card-text">Done tasks by all the time: <span th:text="${tasksDoneByUser}"></span></p>
                 </div>
             </div>
         </div>

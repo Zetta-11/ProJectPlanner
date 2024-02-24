@@ -7,4 +7,10 @@ import java.util.List;
 
 public interface TaskRepository extends JpaRepository<Task, Long> {
     List<Task> findTaskByProjectId(int id);
+
+    int countTasksByAssignedToUserLoginAndStatusNotIn(String login, List<String> statuses);
+
+    int countTasksByAssignedToUserLoginAndStatus(String login, String status);
+
+    int countTasksByCreatedByUserLogin(String login);
 }

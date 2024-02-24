@@ -12,6 +12,12 @@ public interface UserService {
 
     boolean checkPasswordIsValid(String password);
 
+    int countTasksAssignedToUser(String login);
+
+    int countTasksCreatedByUser(String login);
+
+    int countTasksDoneByUser(String login);
+
     List<User> getAllUsers();
 
     User findByLogin(String login);

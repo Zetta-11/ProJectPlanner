@@ -1,6 +1,7 @@
 package com.dnu.klimmenkov.projectplanner.service.impl;
 
 import com.dnu.klimmenkov.projectplanner.entity.User;
+import com.dnu.klimmenkov.projectplanner.repository.TaskRepository;
 import com.dnu.klimmenkov.projectplanner.repository.UserRepository;
 import com.dnu.klimmenkov.projectplanner.service.UserService;
 import lombok.AllArgsConstructor;
@@ -8,14 +9,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    private UserRepository userRepository;
-    private PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final TaskRepository taskRepository;
 
     @Override
     public void saveUser(User user) {
@@ -41,6 +44,21 @@ public class UserServiceImpl implements UserService {
     public boolean checkPasswordIsValid(String password) {
         String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
         return password.matches(regex);
+    }
+
+    @Override
+    public int countTasksAssignedToUser(String login) {
+        return taskRepository.countTasksByAssignedToUserLoginAndStatusNotIn(login, Arrays.asList("Done", "In Progress"));
+    }
+
+    @Override
+    public int countTasksCreatedByUser(String login) {
+        return taskRepository.countTasksByCreatedByUserLogin(login);
+    }
+
+    @Override
+    public int countTasksDoneByUser(String login) {
+        return taskRepository.countTasksByAssignedToUserLoginAndStatus(login, "Done");
     }
 
     @Override
