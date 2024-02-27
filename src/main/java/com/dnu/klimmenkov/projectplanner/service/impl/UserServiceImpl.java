@@ -68,6 +68,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> getAllUsersByProjectId(int id) {
+        List<User> allUsersByProjectId = userRepository.findAllByProjectId(id);
+        return allUsersByProjectId;
+    }
+
+    @Override
     public User findByLogin(String login) {
         return userRepository.findByLogin(login).orElse(null);
     }

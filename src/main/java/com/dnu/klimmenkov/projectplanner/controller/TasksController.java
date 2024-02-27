@@ -8,16 +8,21 @@ import com.dnu.klimmenkov.projectplanner.service.TaskService;
 import com.dnu.klimmenkov.projectplanner.service.UserService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -47,8 +52,32 @@ public class TasksController {
         return "home/tasks";
     }
 
+    @GetMapping("/{taskId}")
+    public String getTaskDetailsPage(@PathVariable("taskId") int taskId, Model model) {
+        Task task = taskService.getTaskById(taskId);
+        if (task == null) {
+            return "redirect:/tasks";
+        }
+        model.addAttribute("task", task);
+
+        return "home/taskDetails";
+    }
+
+    @PostMapping("/updateStatus/{taskId}")
+    public String updateTaskStatus(@PathVariable int taskId, @RequestParam String status) {
+        Task task = taskService.getTaskById(taskId);
+        if (task == null) {
+            return "redirect:/tasks";
+        }
+        task.setStatus(status);
+        taskService.saveTask(task);
+
+        return "redirect:/tasks/{taskId}";
+    }
+
+
     @GetMapping("/new")
-    public String getTasksCreatePage(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+    public String getTasksCreatePage(Model model) {
         List<User> users = userService.getAllUsers();
         List<Project> projects = projectService.getAllProjects();
 
@@ -59,13 +88,57 @@ public class TasksController {
         return "home/addTask";
     }
 
+    @GetMapping("/usersByProjectId/{id}")
+    @ResponseBody
+    public ResponseEntity<List<User>> getAllUsersByProjectId(@PathVariable int id) {
+        List<User> users = userService.getAllUsersByProjectId(id);
+        return ResponseEntity.ok(users);
+    }
+
     @PostMapping()
-    public String createNewTask(@Valid @ModelAttribute("task") Task task, BindingResult bindingResult, Model model){
+    public String createNewTask(Model model, @AuthenticationPrincipal UserDetails userDetails,
+                                @RequestParam String deadLine,
+                                RedirectAttributes redirectAttributes,
+                                @Valid @ModelAttribute("task") Task task,
+                                BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
+            List<User> users = userService.getAllUsers();
+            List<Project> projects = projectService.getAllProjects();
+            model.addAttribute("users", users);
+            model.addAttribute("projects", projects);
+
             return "home/addTask";
         }
 
-        // Add logic to save task
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate parsedDeadline = LocalDate.parse(deadLine, formatter);
+            LocalDateTime localDateTime = parsedDeadline.atStartOfDay().withHour(20);
+            ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of("Europe/Kiev"));
+            Timestamp deadlineTimestamp = Timestamp.valueOf(zonedDateTime.toLocalDateTime());
+            task.setDeadline(deadlineTimestamp);
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Select deadline!");
+            List<User> users = userService.getAllUsers();
+            List<Project> projects = projectService.getAllProjects();
+            model.addAttribute("users", users);
+            model.addAttribute("projects", projects);
+
+            return "redirect:/tasks/new";
+        }
+
+        task.setCreatedByUser(userService.findByLogin(userDetails.getUsername()));
+        task.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+        task.setStatus("To Do");
+        taskService.saveTask(task);
+
+        return "redirect:/tasks";
+    }
+
+    @GetMapping("/delete/{taskId}")
+    public String deleteTask(@PathVariable("taskId") int taskId) {
+        taskService.deleteTaskById(taskId);
+
         return "redirect:/tasks";
     }
 }

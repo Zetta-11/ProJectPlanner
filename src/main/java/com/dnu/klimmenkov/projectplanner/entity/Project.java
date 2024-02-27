@@ -1,5 +1,6 @@
 package com.dnu.klimmenkov.projectplanner.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -30,6 +31,8 @@ public class Project {
     @Column(name = "created_at", updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private java.sql.Timestamp createdAt;
 
+    @ToString.Exclude
+    @JsonManagedReference
     @OneToMany(mappedBy = "project")
     private List<User> users;
 }

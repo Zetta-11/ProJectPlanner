@@ -1,10 +1,7 @@
 package com.dnu.klimmenkov.projectplanner.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -46,9 +43,10 @@ public class Task {
 
     @NotNull(message = "Cannot be null!")
     @Max(value = 10, message = "Should be from 0 to 10")
+    @Min(value = 0, message = "Should be from 0 to 10")
     private int priority;
 
-    @NotNull(message = "Deadline cannot be null!")
+    //@NotNull(message = "Deadline cannot be null!")
     private Timestamp deadline;
 
     @Pattern(regexp = "^(Done|In Progress|To Do)$", message = "Status should be: Done, In Progress or To Do")

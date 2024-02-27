@@ -20,6 +20,8 @@ public interface UserService {
 
     List<User> getAllUsers();
 
+    List<User> getAllUsersByProjectId(int id);
+
     User findByLogin(String login);
 
     User getUserById(int id);

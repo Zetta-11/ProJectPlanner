@@ -8,4 +8,5 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
 
     @Query("SELECT COUNT(u) FROM User u WHERE u.project.id = ?1")
     int countUsersByProjectId(int projectId);
+
 }

@@ -1,5 +1,6 @@
 package com.dnu.klimmenkov.projectplanner.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -40,6 +41,7 @@ public class User {
 
     //@NotNull(message = "You should select the project")
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "project_id")
     private Project project;
 }

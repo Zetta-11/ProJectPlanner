@@ -16,5 +16,7 @@ public interface TaskService {
 
     Task getTaskById(int id);
 
+    void saveTask(Task task);
+
     void deleteTaskById(int id);
 }
