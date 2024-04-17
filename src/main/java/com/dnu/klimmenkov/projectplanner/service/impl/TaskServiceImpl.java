@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -48,6 +49,43 @@ public class TaskServiceImpl implements TaskService {
         List<Task> DoneTasks = allTasksByProjectId.stream().filter(t -> t.getStatus().equals("Done")).toList();
 
         return DoneTasks;
+    }
+
+    @Override
+    public List<Task> filterTasks(String priority, String status, String project, String assignedTo) {
+        List<Task> tasks = this.getAllTasks();
+
+        if (priority != null && !priority.isEmpty()) {
+            String[] priorityRange = priority.split("-");
+            int minPriority = Integer.parseInt(priorityRange[0]);
+            int maxPriority = Integer.parseInt(priorityRange[1]);
+
+            tasks = tasks.stream()
+                    .filter(task -> task.getPriority() >= minPriority && task.getPriority() <= maxPriority)
+                    .collect(Collectors.toList());
+        }
+
+        if (status != null && !status.isEmpty()) {
+            tasks = tasks.stream()
+                    .filter(task -> task.getStatus().equals(status))
+                    .collect(Collectors.toList());
+        }
+
+        if (project != null && !project.isEmpty()) {
+            tasks = tasks.stream().filter(task -> task.getProject().getName().equals(project)).collect(Collectors.toList());
+        }
+
+        if (assignedTo != null && !assignedTo.isEmpty()) {
+            tasks = tasks.stream().filter(task -> {
+                if (task.getAssignedToUser() != null) {
+                    return task.getAssignedToUser().getLogin().equals(assignedTo);
+                } else {
+                    return false;
+                }
+            }).collect(Collectors.toList());
+        }
+
+        return tasks;
     }
 
     @Override

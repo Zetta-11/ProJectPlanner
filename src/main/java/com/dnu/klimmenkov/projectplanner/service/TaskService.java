@@ -14,6 +14,8 @@ public interface TaskService {
 
     List<Task> getInDoneTasksByProjectId(int id);
 
+    List<Task> filterTasks(String priority, String status, String project, String assignedTo);
+
     Task getTaskById(int id);
 
     void saveTask(Task task);

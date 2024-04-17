@@ -28,7 +28,7 @@ import java.util.List;
 @Controller
 @AllArgsConstructor
 @RequestMapping("/tasks")
-public class TasksController {
+public class TaskController {
 
     private final TaskService taskService;
     private final UserService userService;
