@@ -29,7 +29,6 @@ public class AdminTaskController {
                                  @RequestParam(required = false) String assignedTo) {
         List<Task> tasks = taskService.filterTasks(priority, status, project, assignedTo);
         model.addAttribute("tasks", tasks);
-       // model.addAttribute("tasks", taskService.getAllTasks());
         model.addAttribute("projects", projectService.getAllProjects());
         model.addAttribute("users", userService.getAllUsers());
 
