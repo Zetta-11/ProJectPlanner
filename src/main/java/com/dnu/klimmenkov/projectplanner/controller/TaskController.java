@@ -1,8 +1,10 @@
 package com.dnu.klimmenkov.projectplanner.controller;
 
+import com.dnu.klimmenkov.projectplanner.entity.Comment;
 import com.dnu.klimmenkov.projectplanner.entity.Project;
 import com.dnu.klimmenkov.projectplanner.entity.Task;
 import com.dnu.klimmenkov.projectplanner.entity.User;
+import com.dnu.klimmenkov.projectplanner.service.CommentService;
 import com.dnu.klimmenkov.projectplanner.service.ProjectService;
 import com.dnu.klimmenkov.projectplanner.service.TaskService;
 import com.dnu.klimmenkov.projectplanner.service.UserService;
@@ -33,6 +35,7 @@ public class TaskController {
     private final TaskService taskService;
     private final UserService userService;
     private final ProjectService projectService;
+    private final CommentService commentService;
 
     @GetMapping()
     public String getTasksPage(@AuthenticationPrincipal UserDetails userDetails, Model model) {
@@ -59,6 +62,7 @@ public class TaskController {
             return "redirect:/tasks";
         }
         model.addAttribute("task", task);
+        model.addAttribute("comments", task.getComments());
 
         return "home/taskDetails";
     }
@@ -134,6 +138,24 @@ public class TaskController {
 
         return "redirect:/tasks";
     }
+
+    @PostMapping("/addComment/{taskId}")
+    public String addNewCommentToTheTask(@AuthenticationPrincipal UserDetails userDetails, @PathVariable int taskId, @RequestParam String commentText) {
+        Task task = taskService.getTaskById(taskId);
+        if (task == null) {
+            return "redirect:/tasks";
+        }
+        Comment comment = Comment.builder()
+                .task(task)
+                .commentText(commentText)
+                .user(userService.findByLogin(userDetails.getUsername()))
+                .createdAt(new Timestamp(System.currentTimeMillis()))
+                .build();
+        commentService.saveComment(comment);
+
+        return "redirect:/tasks/{taskId}";
+    }
+
 
     @GetMapping("/delete/{taskId}")
     public String deleteTask(@PathVariable("taskId") int taskId) {

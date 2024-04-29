@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @Data
@@ -40,6 +41,9 @@ public class Task {
     @ManyToOne
     @JoinColumn(name = "assigned_to_user_id")
     private User assignedToUser;
+
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Comment> comments;
 
     @NotNull(message = "Cannot be null!")
     @Max(value = 10, message = "Should be from 0 to 10")

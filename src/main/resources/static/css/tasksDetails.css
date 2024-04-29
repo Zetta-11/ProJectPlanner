@@ -40,3 +40,8 @@
     width: 50px;
     height: 50px;
 }
+
+.commentSign {
+    margin-left: 10px;
+    font-size: 25px;
+}
