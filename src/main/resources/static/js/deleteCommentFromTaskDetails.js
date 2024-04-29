@@ -13,9 +13,3 @@ function deleteComment(button) {
         console.error('Error:', error);
     });
 }
-
-document.querySelectorAll('.delete-comment').forEach(function (button) {
-    button.addEventListener('click', function () {
-        deleteComment(this);
-    });
-});
