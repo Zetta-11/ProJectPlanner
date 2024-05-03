@@ -22,7 +22,7 @@ public interface UserService {
 
     List<User> getAllUsersByProjectId(int id);
 
-    User findByLogin(String login);
+    User findUserByLogin(String login);
 
     User getUserById(int id);
 

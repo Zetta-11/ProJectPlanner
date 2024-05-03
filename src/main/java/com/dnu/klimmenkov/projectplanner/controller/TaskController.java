@@ -40,17 +40,12 @@ public class TaskController {
     @GetMapping()
     public String getTasksPage(@AuthenticationPrincipal UserDetails userDetails, Model model) {
         String currentUsername = userDetails.getUsername();
-        Project currentProject = userService.findByLogin(currentUsername).getProject();
+        Project currentProject = userService.findUserByLogin(currentUsername).getProject();
         int projectId = currentProject.getId();
-        List<Task> tasks = taskService.getAllTasksByProjectId(projectId);
-        List<Task> toDoTasks = taskService.getToDoTasksByProjectId(projectId);
-        List<Task> inProgressTasks = taskService.getInProgressTasksByProjectId(projectId);
-        List<Task> doneTasks = taskService.getInDoneTasksByProjectId(projectId);
-
-        model.addAttribute("tasks", tasks);
-        model.addAttribute("toDoTasks", toDoTasks);
-        model.addAttribute("inProgressTasks", inProgressTasks);
-        model.addAttribute("doneTasks", doneTasks);
+        model.addAttribute("tasks", taskService.getAllTasksByProjectId(projectId));
+        model.addAttribute("toDoTasks", taskService.getToDoTasksByProjectId(projectId));
+        model.addAttribute("inProgressTasks", taskService.getInProgressTasksByProjectId(projectId));
+        model.addAttribute("doneTasks", taskService.getInDoneTasksByProjectId(projectId));
 
         return "home/tasks";
     }
@@ -131,7 +126,7 @@ public class TaskController {
             return "redirect:/tasks/new";
         }
 
-        task.setCreatedByUser(userService.findByLogin(userDetails.getUsername()));
+        task.setCreatedByUser(userService.findUserByLogin(userDetails.getUsername()));
         task.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         task.setStatus("To Do");
         taskService.saveTask(task);
@@ -148,7 +143,7 @@ public class TaskController {
         Comment comment = Comment.builder()
                 .task(task)
                 .commentText(commentText)
-                .user(userService.findByLogin(userDetails.getUsername()))
+                .user(userService.findUserByLogin(userDetails.getUsername()))
                 .createdAt(new Timestamp(System.currentTimeMillis()))
                 .build();
         commentService.saveComment(comment);

@@ -40,7 +40,7 @@ public class RegistrationController {
             return "registration";
         }
 
-        User existingUser = userService.findByLogin(user.getLogin());
+        User existingUser = userService.findUserByLogin(user.getLogin());
         if (existingUser != null) {
             model.addAttribute("userExistsError", true);
             model.addAttribute("allProjects", projectService.getAllProjects());

@@ -23,7 +23,7 @@ public class MyAccountController {
     @GetMapping
     public String showMyAccount(@AuthenticationPrincipal UserDetails userDetails, Model model) {
         String login = userDetails.getUsername();
-        User user = userService.findByLogin(login);
+        User user = userService.findUserByLogin(login);
         int tasksAssignedToUser = userService.countTasksAssignedToUser(login);
         int tasksCreatedByUser = userService.countTasksCreatedByUser(login);
         int tasksDoneByUser = userService.countTasksDoneByUser(login);
@@ -59,7 +59,7 @@ public class MyAccountController {
         }
 
         String login = userDetails.getUsername();
-        User user = userService.findByLogin(login);
+        User user = userService.findUserByLogin(login);
         user.setPassword(newPassword);
         userService.saveUser(user);
 
