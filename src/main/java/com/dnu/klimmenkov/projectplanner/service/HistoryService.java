@@ -9,6 +9,8 @@ public interface HistoryService {
 
     List<History> getAllHistory();
 
+    List<History> filterHistory(String priority, String status, String project, String assignedTo);
+
     void deleteHistory(int id);
 
     void clearAllHistory();

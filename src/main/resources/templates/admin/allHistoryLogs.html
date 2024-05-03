@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>History Logs</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/footer.css">
+</head>
+<body>
+
+<header>
+    <div class="header-left">
+        <img src="/images/mainLogo.png" alt="Logo">
+        <h1>ProJectPlanner</h1>
+    </div>
+    <nav>
+        <a href="/home">Home</a>
+        <a href="/projects">Projects</a>
+        <a sec:authorize="isAuthenticated()" href="/myAccount">My Account</a>
+        <a href="/about">About</a>
+        <a sec:authorize="hasRole('ROLE_ADMIN')" href="/admin">Admin</a>
+    </nav>
+    <form class="header-right" th:action="@{/logout}" method="post">
+        <button sec:authorize="isAuthenticated()" class="logout-button" type="submit">Logout</button>
+    </form>
+</header>
+
+<div class="container mt-5">
+    <div class="card mb-4">
+        <div class="card-header">Filter Logs</div>
+        <div class="card-body">
+            <form th:action="@{/admin/history}" method="get">
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label for="fromDate">From Date</label>
+                        <input type="date" id="fromDate" name="fromDate" class="form-control"/>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="toDate">To Date</label>
+                        <input type="date" id="toDate" name="toDate" class="form-control"/>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="user">User</label>
+                        <select id="user" name="user" class="form-control">
+                            <option value="">All Users</option>
+                            <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.login}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="actionType">Action Type</label>
+                        <select id="actionType" name="actionType" class="form-control">
+                            <option value="">All Actions</option>
+                            <option value="get">Get</option>
+                            <option value="save">Save</option>
+                            <option value="delete">Delete</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <button type="submit" class="btn btn-primary">Filter</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>User</th>
+            <th>Action Description</th>
+            <th>Created At</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="log : ${logs}">
+            <td th:text="${log.id}"></td>
+            <td th:text="${log.user != null ? log.user.login != null ? log.user.login : 'N/A' : 'No User'}"></td>
+            <td th:text="${log.actionDescription}"></td>
+            <td th:text="${#dates.format(log.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<footer>
+    <p>&copy; Klim Menkov 2024 ProJectPlanner. All rights reserved.</p>
+</footer>
+</body>
+</html>
