@@ -4,10 +4,7 @@ import com.dnu.klimmenkov.projectplanner.entity.Comment;
 import com.dnu.klimmenkov.projectplanner.entity.Project;
 import com.dnu.klimmenkov.projectplanner.entity.Task;
 import com.dnu.klimmenkov.projectplanner.entity.User;
-import com.dnu.klimmenkov.projectplanner.service.CommentService;
-import com.dnu.klimmenkov.projectplanner.service.ProjectService;
-import com.dnu.klimmenkov.projectplanner.service.TaskService;
-import com.dnu.klimmenkov.projectplanner.service.UserService;
+import com.dnu.klimmenkov.projectplanner.service.*;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +14,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -36,6 +35,7 @@ public class TaskController {
     private final UserService userService;
     private final ProjectService projectService;
     private final CommentService commentService;
+    private final AttachmentService attachmentService;
 
     @GetMapping()
     public String getTasksPage(@AuthenticationPrincipal UserDetails userDetails, Model model) {
@@ -46,7 +46,6 @@ public class TaskController {
         model.addAttribute("toDoTasks", taskService.getToDoTasksByProjectId(projectId));
         model.addAttribute("inProgressTasks", taskService.getInProgressTasksByProjectId(projectId));
         model.addAttribute("doneTasks", taskService.getInDoneTasksByProjectId(projectId));
-
         return "home/tasks";
     }
 
@@ -57,6 +56,7 @@ public class TaskController {
             return "redirect:/tasks";
         }
         model.addAttribute("task", task);
+        model.addAttribute("attachments", attachmentService.getAttachmentsForTask(task));
         model.addAttribute("comments", task.getComments());
 
         return "home/taskDetails";
@@ -70,7 +70,6 @@ public class TaskController {
         }
         task.setStatus(status);
         taskService.saveTask(task);
-
         return "redirect:/tasks/{taskId}";
     }
 
@@ -135,7 +134,11 @@ public class TaskController {
     }
 
     @PostMapping("/addComment/{taskId}")
-    public String addNewCommentToTheTask(@AuthenticationPrincipal UserDetails userDetails, @PathVariable int taskId, @RequestParam String commentText) {
+    public String addNewCommentToTheTask(Model model,
+                                         @AuthenticationPrincipal UserDetails userDetails,
+                                         @PathVariable int taskId,
+                                         @RequestParam String commentText,
+                                         @RequestParam("file") MultipartFile file) {
         Task task = taskService.getTaskById(taskId);
         if (task == null) {
             return "redirect:/tasks";
@@ -147,6 +150,12 @@ public class TaskController {
                 .createdAt(new Timestamp(System.currentTimeMillis()))
                 .build();
         commentService.saveComment(comment);
+        try {
+            attachmentService.saveAttachment(file, taskId);
+        } catch (IOException e) {
+            model.addAttribute("errorMessage", "Failed to save attachment. Please try again later.");
+            return "home/taskDetails";
+        }
 
         return "redirect:/tasks/{taskId}";
     }

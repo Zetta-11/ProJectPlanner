@@ -40,13 +40,39 @@
         </div>
         <div class="card mt-3">
             <div class="card-header">
+                Attached Files
+            </div>
+            <div class="card-body">
+                <div th:each="attachment : ${attachments}" class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${attachment.fileName}"></h5>
+                        <p class="card-text">File Type: <span th:text="${attachment.fileType}"></span></p>
+                        <a th:href="@{'/downloadAttachment/' + ${attachment.id}}" target="_blank"
+                           class="btn btn-primary">Download</a>
+                    </div>
+                </div>
+                <div th:if="${#lists.isEmpty(attachments)}">
+                    <p class="text-muted">No files attached</p>
+                </div>
+            </div>
+        </div>
+        <div class="card mt-3">
+            <div class="card-header">
                 Add Comment
             </div>
             <div class="card-body">
-                <form th:action="@{'/tasks/addComment/' + ${task.id}}" method="post">
+                <form th:action="@{'/tasks/addComment/' + ${task.id}}" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="comment">Comment:</label>
                         <textarea class="form-control" id="comment" name="commentText" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="file">Attach File:</label>
+                        <input type="file" class="form-control-file" id="file" name="file"
+                               accept="image/*,application/pdf">
+                    </div>
+                    <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+                        <span th:text="${errorMessage}"></span>
                     </div>
                     <button type="submit" class="btn btn-primary">Add Comment</button>
                 </form>

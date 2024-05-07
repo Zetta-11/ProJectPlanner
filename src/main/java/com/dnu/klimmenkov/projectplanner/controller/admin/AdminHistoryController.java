@@ -19,14 +19,14 @@ public class AdminHistoryController {
 
     private final HistoryService historyService;
     private final UserService userService;
+
     @GetMapping
     public String getAllHistoryLogs(
             @RequestParam(name = "fromDate", required = false) String fromDate,
             @RequestParam(name = "toDate", required = false) String toDate,
             @RequestParam(name = "user", required = false) String user,
             @RequestParam(name = "actionType", required = false) String actionType,
-            Model model
-    ) {
+            Model model) {
         List<History> filteredHistory = historyService.filterHistory(fromDate, toDate, user, actionType);
         model.addAttribute("users", userService.getAllUsers());
         model.addAttribute("logs", filteredHistory);
