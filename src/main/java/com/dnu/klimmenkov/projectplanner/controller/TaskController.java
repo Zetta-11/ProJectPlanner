@@ -1,9 +1,6 @@
 package com.dnu.klimmenkov.projectplanner.controller;
 
-import com.dnu.klimmenkov.projectplanner.entity.Comment;
-import com.dnu.klimmenkov.projectplanner.entity.Project;
-import com.dnu.klimmenkov.projectplanner.entity.Task;
-import com.dnu.klimmenkov.projectplanner.entity.User;
+import com.dnu.klimmenkov.projectplanner.entity.*;
 import com.dnu.klimmenkov.projectplanner.service.*;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -36,6 +33,7 @@ public class TaskController {
     private final ProjectService projectService;
     private final CommentService commentService;
     private final AttachmentService attachmentService;
+    private final TaskHistoryService taskHistoryService;
 
     @GetMapping()
     public String getTasksPage(@AuthenticationPrincipal UserDetails userDetails, Model model) {
@@ -61,6 +59,14 @@ public class TaskController {
 
         return "home/taskDetails";
     }
+
+    @GetMapping("/{taskId}/history")
+    public String getTaskHistory(@PathVariable int taskId, Model model) {
+        List<TaskHistory> histories = taskHistoryService.getHistoriesByTaskId(taskId);
+        model.addAttribute("histories", histories);
+        return "home/taskHistory";
+    }
+
 
     @PostMapping("/updateStatus/{taskId}")
     public String updateTaskStatus(@PathVariable int taskId, @RequestParam String status) {

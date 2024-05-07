@@ -8,7 +8,7 @@ import java.sql.Date;
 @Entity
 @Data
 @Table(name = "task_history")
-public class TaksHistory {
+public class TaskHistory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +28,5 @@ public class TaksHistory {
 
     @Column(name = "details", nullable = true)
     private String details;
-
     //TODO
 }
