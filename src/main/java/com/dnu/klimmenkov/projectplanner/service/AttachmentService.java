@@ -8,6 +8,9 @@ import java.io.IOException;
 import java.util.List;
 
 public interface AttachmentService {
+
+    Attachment getAttachmentById(int id);
+
     void saveAttachment(MultipartFile file, int taskId) throws IOException;
 
     List<Attachment> getAttachmentsForTask(Task task);

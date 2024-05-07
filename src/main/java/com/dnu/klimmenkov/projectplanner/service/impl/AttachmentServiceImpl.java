@@ -23,6 +23,11 @@ public class AttachmentServiceImpl implements AttachmentService {
     private final TaskService taskService;
 
     @Override
+    public Attachment getAttachmentById(int id) {
+        return attachmentRepository.getReferenceById((long) id);
+    }
+
+    @Override
     public void saveAttachment(MultipartFile file, int taskId) throws IOException {
         if (!file.isEmpty()) {
 

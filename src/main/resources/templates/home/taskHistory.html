@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Details</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <script src="/js/deleteCommentFromTaskDetails.js"></script>
+</head>
+
+<body>
+<header>
+    <div class="header-left">
+        <img src="/images/mainLogo.png" alt="Logo">
+        <h1>ProJectPlanner</h1>
+    </div>
+    <nav>
+        <a href="/home">Home</a>
+        <a href="/projects">Projects</a>
+        <a href="/myAccount">My account</a>
+        <a href="/about">About</a>
+        <a href="/tasks">Back</a>
+        <a sec:authorize="hasRole('ROLE_ADMIN')" href="/admin">Admin</a>
+    </nav>
+    <form class="header-right" th:action="@{/logout}" method="post">
+        <button sec:authorize="isAuthenticated()" class="logout-button" type="submit">Logout</button>
+    </form>
+</header>
+
+<h1>History for Task</h1>
+<div th:each="history : ${histories}">
+    <p><b>Date/Time:</b> <span th:text="${history.timestamp}"></span></p>
+    <p><b>User:</b> <span th:text="${history.userId}">User ID</span></p>
+    <p><b>Action:</b> <span th:text="${history.action}">Action Details</span></p>
+    <p><b>Details:</b> <span th:text="${history.details}">Details of the action</span></p>
+</div>
+
+<footer class="mt-3">
+    <div class="container">
+        <p>&copy; Klim Menkov 2024 ProJectPlanner. All rights reserved.</p>
+    </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
