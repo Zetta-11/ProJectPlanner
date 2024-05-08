@@ -32,4 +32,10 @@ public class AdminHistoryController {
         model.addAttribute("logs", filteredHistory);
         return "admin/allHistoryLogs";
     }
+
+    @GetMapping("/clear")
+    public String deleteAllHistoryLogs() {
+        historyService.clearAllHistory();
+        return "redirect:/admin";
+    }
 }

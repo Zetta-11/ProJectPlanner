@@ -15,6 +15,11 @@ public class TaskHistoryServiceImpl implements TaskHistoryService {
     private final TaskHistoryRepository taskHistoryRepository;
 
     @Override
+    public void saveTaskHistory(TaskHistory taskHistory) {
+        taskHistoryRepository.save(taskHistory);
+    }
+
+    @Override
     public List<TaskHistory> getHistoriesByTaskId(int id) {
         List<TaskHistory> taskHistories = taskHistoryRepository.findByTaskId((long) id);
         return taskHistories;

@@ -65,6 +65,9 @@
     </div>
 
     <table class="table table-striped">
+        <form th:action="@{/admin/history/clear}" method="get">
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete all logs?')">Clear All Logs</button>
+        </form>
         <thead>
         <tr>
             <th>ID</th>

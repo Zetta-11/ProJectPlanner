@@ -1,12 +1,18 @@
 package com.dnu.klimmenkov.projectplanner.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 @Entity
 @Data
+@NoArgsConstructor
+@Builder
+@AllArgsConstructor
 @Table(name = "task_history")
 public class TaskHistory {
 
@@ -14,19 +20,21 @@ public class TaskHistory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "task_id", nullable = false)
-    private Integer taskId;
+    @ManyToOne
+    @JoinColumn(name = "task_id", nullable = false)
+    private Task task;
 
-    @Column(name = "user_id", nullable = false)
-    private Integer userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @Column(name = "action", nullable = false)
     private String action;
 
     @Column(name = "timestamp", nullable = false)
-    private Date timestamp;
+    private Timestamp createdAt;
 
-    @Column(name = "details", nullable = true)
+    @Column(name = "details")
     private String details;
-    //TODO
+
 }

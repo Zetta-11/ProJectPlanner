@@ -30,12 +30,28 @@
     </form>
 </header>
 
-<h1>History for Task</h1>
-<div th:each="history : ${histories}">
-    <p><b>Date/Time:</b> <span th:text="${history.timestamp}"></span></p>
-    <p><b>User:</b> <span th:text="${history.userId}">User ID</span></p>
-    <p><b>Action:</b> <span th:text="${history.action}">Action Details</span></p>
-    <p><b>Details:</b> <span th:text="${history.details}">Details of the action</span></p>
+<div class="container mt-4">
+    <h1>History for Task</h1>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Date/Time</th>
+                <th>User</th>
+                <th>Action</th>
+                <th>Details</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="history : ${histories}">
+                <td th:text="${history.createdAt}">Date/Time</td>
+                <td th:text="${history.user.getLogin()}">User</td>
+                <td th:text="${history.action}">Action</td>
+                <td th:text="${history.details}">Details</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <footer class="mt-3">
