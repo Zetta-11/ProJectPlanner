@@ -15,7 +15,6 @@ ProJectPlanner is a comprehensive project management system designed to streamli
 - **Spring Security:** Ensure the security of your application with Spring Security.
 - **Flyway Migration:** Effortlessly manage database migrations with Flyway.
 - **Validation:** Implement data validation to maintain data integrity.
-- **Java Mail Sender:** Integrate email notifications with Java Mail Sender.
 
 ## Author
 
